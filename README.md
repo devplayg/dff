@@ -16,42 +16,42 @@ Finds duplicate files in directories
 
 ### Find duplicate files in a specific directory 
 
-    ./dff -d /dir
+    dff -d /dir
     
 ### Find duplicate files in specific directories
 
-    ./dff -d /dir1 -d /dir2 -d /dir3
+    dff -d /dir1 -d /dir2 -d /dir3
     
 ### Find duplicate files if there are 10 or more identical files (Default: 2)
 
-    ./dff -d /dir -c 10
+    dff -d /dir -c 10
     
 ### Find duplicate files of 2 MB or more (Default: 1 MB)
 
-    ./dff -d /dir -s 2000000 
+    dff -d /dir -s 2000000 
     
 ### Output format
 
 #### JSON (Default)
     
-    ./dff -d /dir -f json
+    dff -d /dir -f json
 
 #### Text
     
-    ./dff -d /dir -f text
+    dff -d /dir -f text
 
 ### Sort
 
 #### Sort by file size sum
 
-    ./dff -d /dir -r total
+    dff -d /dir -r total
 
 #### Sort by file size
  
-    ./dff -d /dir -r size
+    dff -d /dir -r size
     
 #### Sort by duplicate count    
     
-    ./dff -d /dir -r count
+    dff -d /dir -r count
     
     
