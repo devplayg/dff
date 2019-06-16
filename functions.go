@@ -14,10 +14,6 @@ import (
 	"strings"
 )
 
-func init() {
-
-}
-
 func getSortValue(val string) int {
 	val = strings.TrimSpace(strings.ToLower(val))
 	if val == "size" {

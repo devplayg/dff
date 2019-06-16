@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/devplayg/yuna/dff"
+	"github.com/devplayg/dff"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
 	"os"
