@@ -15,6 +15,14 @@ const (
 	TextFormat
 )
 
+type Option struct {
+	Dirs                     []string
+	MinNumOfFilesInFileGroup int
+	MinFileSize              int64
+	SortBy                   string
+	Format                   string
+}
+
 type FileDetail struct {
 	dir string
 	f   os.FileInfo

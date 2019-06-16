@@ -9,11 +9,11 @@ import (
 	"time"
 )
 
-var fs *pflag.FlagSet
-var version = "1.0.7"
-var duplicateFileFinder *dff.DuplicateFileFinder
+var version = "1.0.8"
+var option *dff.Option
 
 func main() {
+	duplicateFileFinder := dff.NewDuplicateFileFinder(option)
 	err := duplicateFileFinder.Start(time.Now())
 	if err != nil {
 		log.Error(err)
@@ -22,31 +22,36 @@ func main() {
 }
 
 func init() {
-	// Get flag set
-	fs = pflag.NewFlagSet("dff", pflag.ContinueOnError)
 
-	// Get arguments
+	// Set flags
+	fs := pflag.NewFlagSet("dff", pflag.ContinueOnError)
 	dirs := fs.StringArrayP("dir", "d", []string{}, "Target directories")
 	minNumOfFilesInFileGroup := fs.IntP("min-count", "c", 2, "Minimum number of files in file group")
 	minFileSize := fs.Int64P("min-size", "s", 1e6, "Minimum file size (Byte)")
 	verbose := fs.BoolP("verbose", "v", false, "Verbose")
 	sortBy := fs.StringP("sort", "r", "total", "Sort by [size | total | count]")
 	format := fs.StringP("format", "f", "json", "Output format [json | text]")
-	fs.Usage = printHelp
+	fs.Usage = func() {
+		fmt.Printf("Duplicate file finder v%s\n\n", version)
+		fs.PrintDefaults()
+	}
 	_ = fs.Parse(os.Args[1:])
 
 	// Check target directories
 	if len(*dirs) < 1 {
-		printHelp()
+		fs.Usage()
 		os.Exit(0)
 	}
 
+	// Initialize Logger
 	dff.InitLogger(*verbose)
 
-	duplicateFileFinder = dff.NewDuplicateFileFinder(*dirs, *minNumOfFilesInFileGroup, *minFileSize, *sortBy, *format)
-}
-
-func printHelp() {
-	fmt.Printf("Duplicate file finder v%s\n\n", version)
-	fs.PrintDefaults()
+	// Set options
+	option = &dff.Option{
+		Dirs:                     *dirs,
+		MinNumOfFilesInFileGroup: *minNumOfFilesInFileGroup,
+		MinFileSize:              *minFileSize,
+		SortBy:                   *sortBy,
+		Format:                   *format,
+	}
 }
