@@ -1,6 +1,7 @@
 # Duplicate File Finder
 
 [![Build Status](https://travis-ci.com/devplayg/dff.svg?branch=master)](https://travis-ci.com/devplayg/dff)
+[![Go Report Card](https://goreportcard.com/badge/github.com/devplayg/dff)](https://goreportcard.com/report/github.com/devplayg/dff)
 
 finds duplicate files in directories
 
