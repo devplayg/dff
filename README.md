@@ -8,7 +8,7 @@ finds duplicate files in directories
 
 *Powered by [HighwayHash](https://github.com/google/highwayhash) hash algorithm*
 
-    Duplicate file finder v1.0.7
+    Duplicate file finder
     
       -d, --dir stringArray   Target directories
       -f, --format string     Output format [json | text] (default "json")
@@ -36,25 +36,25 @@ finds duplicate files in directories
     
 ### Output format
 
-#### JSON (Default)
+JSON (Default)
     
     dff -d /dir -f json
 
-#### Text
+Text
     
     dff -d /dir -f text
 
 ### Sort
 
-#### Sort by file size sum
+Sort by file size sum
 
     dff -d /dir -r total
 
-#### Sort by file size
+Sort by file size
  
     dff -d /dir -r size
     
-#### Sort by duplicate count    
+Sort by duplicate count    
     
     dff -d /dir -r count
     
