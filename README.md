@@ -1,5 +1,7 @@
 # Duplicate File Finder
 
+[![Build Status](https://travis-ci.com/devplayg/dff.svg?branch=master)](https://travis-ci.com/devplayg/dff)
+
 finds duplicate files in directories
 
 *Powered by [HighwayHash](https://github.com/google/highwayhash) hash algorithm*
