@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var version = "1.0.8"
+var version = "1.0.9"
 var option *dff.Option
 
 func main() {
