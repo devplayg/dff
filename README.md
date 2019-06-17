@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/devplayg/dff.svg?branch=master)](https://travis-ci.com/devplayg/dff)
 [![Go Report Card](https://goreportcard.com/badge/github.com/devplayg/dff)](https://goreportcard.com/report/github.com/devplayg/dff)
 ![GitHub release](https://img.shields.io/github/release/devplayg/dff.svg?color=blue&label=release)
+[![Release](https://img.shields.io/github/release/devplayg/dff.svg)](https://github.com/devplayg/dff/releases)
 
 finds duplicate files in directories
 
