@@ -1,20 +1,15 @@
 package dff
 
-import (
-	log "github.com/sirupsen/logrus"
-	"time"
-)
-
 type DuplicateFileFinder struct {
 	sortBy            int
 	accessDeniedCount int
 	format            int
-	option            *Option
+	Option            *Option
 }
 
 func NewDuplicateFileFinder(option *Option) *DuplicateFileFinder {
 	dff := DuplicateFileFinder{
-		option: option,
+		Option: option,
 		sortBy: getSortValue(option.SortBy),
 		format: getFormatValue(option.Format),
 	}
@@ -22,50 +17,49 @@ func NewDuplicateFileFinder(option *Option) *DuplicateFileFinder {
 	return &dff
 }
 
-func (d *DuplicateFileFinder) Start(t time.Time) error {
-	absDirs, err := isReadableDirs(d.option.Dirs)
+func (d *DuplicateFileFinder) Find() ([]*UniqFile, int, error) {
+	absDirs, err := isReadableDirs(d.Option.Dirs)
 	if err != nil {
-		return err
+		return nil, 0, err
 	}
-	d.option.Dirs = absDirs
+	d.Option.Dirs = absDirs
 
-	fileMap, err := collectFilesInDirs(d.option.Dirs, d.option.MinFileSize)
+	fileMap, err := collectFilesInDirs(d.Option.Dirs, d.Option.MinFileSize)
 	if err != nil {
-		return err
-	}
-
-	duplicateFileMap, err := findDuplicateFiles(fileMap, d.option.MinNumOfFilesInFileGroup)
-	if err != nil {
-		return err
+		return nil, 0, err
 	}
 
-	duplicateFileGroupCount := d.displayDuplicateFileGroups(duplicateFileMap)
-
-	log.WithFields(log.Fields{
-		"number_of_files_scanned":               len(fileMap),
-		"duplicate_group_count":                 duplicateFileGroupCount,
-		"minimum_number_of_files_in_file_group": d.option.MinNumOfFilesInFileGroup,
-		"min_file_size":                         d.option.MinFileSize,
-		"running_time(sec)":                     time.Since(t).Seconds(),
-	}).Info("result")
-	return nil
+	list, err := d.filterAndSort(fileMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	return list, len(fileMap), nil
 }
 
-func (d *DuplicateFileFinder) displayDuplicateFileGroups(duplicateFileMap DuplicateFileMap) int {
+func (d *DuplicateFileFinder) filterAndSort(fileMap FileMap) ([]*UniqFile, error) {
+	duplicateFileMap, err := findDuplicateFiles(fileMap, d.Option.MinNumOfFilesInFileGroup)
+	if err != nil {
+		return nil, err
+	}
+
 	for key, uniqFile := range duplicateFileMap {
-		if len(uniqFile.List) < d.option.MinNumOfFilesInFileGroup {
+		if len(uniqFile.List) < d.Option.MinNumOfFilesInFileGroup {
 			delete(duplicateFileMap, key)
 		}
 	}
 	list := getSortedValues(duplicateFileMap, d.sortBy)
+	return list, nil
+}
+
+func (d *DuplicateFileFinder) Display(list []*UniqFile) {
 	if len(list) < 1 {
-		return 0
+		return
 	}
 
 	if d.format == TextFormat {
 		outputFilesInTextFormat(list)
-		return len(list)
+		return
 	}
+
 	outputFilesInJsonFormat(list)
-	return len(list)
 }

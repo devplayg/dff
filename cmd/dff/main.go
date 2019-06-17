@@ -13,12 +13,23 @@ var version = "1.0.8"
 var option *dff.Option
 
 func main() {
+	t := time.Now()
 	duplicateFileFinder := dff.NewDuplicateFileFinder(option)
-	err := duplicateFileFinder.Start(time.Now())
+	duplicateList, scanned, err := duplicateFileFinder.Find()
 	if err != nil {
 		log.Error(err)
 		return
 	}
+	duplicateFileFinder.Display(duplicateList)
+
+	// Logging
+	log.WithFields(log.Fields{
+		"number_of_files_scanned":               scanned,
+		"duplicate_group_count":                 len(duplicateList),
+		"minimum_number_of_files_in_file_group": duplicateFileFinder.Option.MinNumOfFilesInFileGroup,
+		"min_file_size":                         duplicateFileFinder.Option.MinFileSize,
+		"running_time(sec)":                     time.Since(t).Seconds(),
+	}).Info("result")
 }
 
 func init() {
