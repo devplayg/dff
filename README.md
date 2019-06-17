@@ -1,6 +1,6 @@
 # Duplicate File Finder
 
-Finds duplicate files in directories
+finds duplicate files in directories
 
 *Powered by [HighwayHash](https://github.com/google/highwayhash) hash algorithm*
 
