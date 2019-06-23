@@ -58,18 +58,20 @@ Sort by duplicate count
     
     dff -d /dir -r count
     
-### In your code
+### Example
 
-    option = &dff.Option{
-		Dirs:                     []string{"/path/to/dir1", "/path/to/dir2"},
-		MinNumOfFilesInFileGroup: 3,
-		MinFileSize:              10000000,
-		SortBy:                   "total",
-		Format:                   "json",
-	}
-	duplicateFileFinder := dff.NewDuplicateFileFinder(option)
-	duplicateList, scanned, err := duplicateFileFinder.Find()
-	if err != nil {
-		log.Error(err)
-		return
-	}
+```go
+option = &dff.Option{
+    Dirs:                     []string{"/path/to/dir1", "/path/to/dir2"},
+    MinNumOfFilesInFileGroup: 3,
+    MinFileSize:              10000000,
+    SortBy:                   "total",
+    Format:                   "json",
+}
+duplicateFileFinder := dff.NewDuplicateFileFinder(option)
+duplicateList, scanned, err := duplicateFileFinder.Find()
+if err != nil {
+    log.Error(err)
+    return
+}
+```
