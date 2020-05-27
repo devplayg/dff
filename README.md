@@ -11,9 +11,9 @@ finds duplicate files in directories
     Duplicate file finder
     
       -d, --dir stringArray   Target directories
-      -f, --format string     Output format [json | text] (default "json")
+      -f, --format string     Output format [json | text] (default "text")
       -c, --min-count int     Minimum number of files in file group (default 2)
-      -s, --min-size int      Minimum file size (Byte) (default 1000000)
+      -s, --min-size int      Minimum file size (Byte) (default 0)
       -r, --sort string       Sort by [size | total | count] (default "total")
       -v, --verbose           Verbose
 

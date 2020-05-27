@@ -38,10 +38,10 @@ func init() {
 	fs := pflag.NewFlagSet("dff", pflag.ContinueOnError)
 	dirs := fs.StringArrayP("dir", "d", []string{}, "Target directories")
 	minNumOfFilesInFileGroup := fs.IntP("min-count", "c", 2, "Minimum number of files in file group")
-	minFileSize := fs.Int64P("min-size", "s", 1e6, "Minimum file size (Byte)")
+	minFileSize := fs.Int64P("min-size", "s", 0, "Minimum file size (Byte)")
 	verbose := fs.BoolP("verbose", "v", false, "Verbose")
 	sortBy := fs.StringP("sort", "r", "total", "Sort by [size | total | count]")
-	format := fs.StringP("format", "f", "json", "Output format [json | text]")
+	format := fs.StringP("format", "f", "text", "Output format [json | text]")
 	fs.Usage = func() {
 		fmt.Printf("Duplicate file finder v%s\n\n", version)
 		fs.PrintDefaults()
